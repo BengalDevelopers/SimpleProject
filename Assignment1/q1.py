@@ -13,7 +13,14 @@ S = np.random.normal(mu, sigma, 100);
 #Defining Strike Value k
 K = 0.5
 
+#Getting optionPrice using Vectorized Function
 optionPrice = co.callOptionValuation(S,K)
 
-print (optionPrice)
+#Getting optionPrice using For Loop 
+optionPrice = co.callOptionValuationForLoop(S,K)
 
+
+if optionPrice != 0:
+	print (optionPrice)
+else:
+	print ('Error in Input Array');
