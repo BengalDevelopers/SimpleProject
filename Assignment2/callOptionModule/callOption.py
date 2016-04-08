@@ -69,7 +69,7 @@ class callOption:
 # 			print(K)
 			#Now Comparing Stock Price with Strike Value and Generating Boolean Based Results
 			comparatorResult = K > S
-			print(comparatorResult)
+# 			print(comparatorResult)
 			#Now Finding the Differnece between Strike Value and Each Stock Price Value
 			differenceBetweenKAndS = K - S
 			
