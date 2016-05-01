@@ -40,43 +40,35 @@ def calculateCall():
 			print (optionPrice)
 	except:
 		pass
-	
+
 # Year Time Series with Hourly - Daily - Weekly -Monthly Breakdown
-def calculateTimeSeries():
-	from timeSeriesModule.timeSeries import timeSeries
-	import pandas as pd
-
-	yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
-	y_t = np.random.normal(mu, sigma, len(yearHourRange))	
-# 	Creating Instance of timeSeries Class
-	ts = timeSeries()
+def calculateTimeSeries(startDate, endDate):
 # 	Creating Date Range
-
-	timeSeries = ts.getYearlyDataSeries(y_t,yearHourRange)
-# 	Printing Results to be returned
-# 	print(timeSeries)
-	return timeSeries
+    import pandas as pd
+    from timeSeriesModule.timeSeries import timeSeries
+    yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
+    #Creating Instance of timeSeries Class
+    ts = timeSeries()
+    timeSeries = ts.getYearlyDataSeries(yearHourRange, mu, sigma)
+    #Printing Results to be returned
+    #print(timeSeries)
+    return timeSeries
 	
-
-
-	
-# def calculate Daily Average of Y_T
-
+#calculate Daily Average of Y_T
 def calculateDailyAverage(YearlytimeSeries, startDate, endDate):
 	from timeSeriesModule.timeAverageCalc import timeAverageCalc
 	avgYT =  timeAverageCalc()
 	dailyAverage = avgYT.dailyAverage(YearlytimeSeries, startDate, endDate)
 	return dailyAverage
-# def calculate Daily Average of Y_T
 
+#def calculate Weekly Average of Y_T
 def calculateWeeklyAverage(YearlytimeSeries, startDate, endDate):
 	from timeSeriesModule.timeAverageCalc import timeAverageCalc
 	avgYT =  timeAverageCalc()
 	weeklyAverage = avgYT.weeklyAverage(YearlytimeSeries, startDate, endDate)
 	return weeklyAverage
 	
-# def calculate Daily Average of Y_T
-
+# def calculate Monthly Average of Y_T
 def calculateMontlyAverage(YearlytimeSeries, startDate, endDate):
 	from timeSeriesModule.timeAverageCalc import timeAverageCalc
 	avgYT =  timeAverageCalc()
@@ -88,11 +80,11 @@ def calculateMontlyAverage(YearlytimeSeries, startDate, endDate):
 ##calculateCall()
 
 #Assignment2 Task 2
-##YearlytimeSeries = calculateTimeSeries()
+##YearlytimeSeries = calculateTimeSeries(startDate, endDate)
 
 
-#print('The Yearly time Series is as follows: ');
-#print(YearlytimeSeries)
+##print('The Yearly time Series is as follows: ');
+##print(YearlytimeSeries)
 
 
 #Assignment2 Task 3
@@ -107,11 +99,57 @@ def calculateMontlyAverage(YearlytimeSeries, startDate, endDate):
 #monthlyAvg = calculateMontlyAverage(YearlytimeSeries, startDate, endDate)
 
 #Assignment3 Task 1
-def simulateDF():
+    
+
+#Assignment3 Task 1 - Using Foor Loop
+def simulateTS(simulationModelSize, startDate, endDate):
+    import pandas as pd
+    yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
     from simulationModule.simulateXDataframe import simulateXDataframe
     sm = simulateXDataframe()
-    DFList = sm.simulationModel(simulationModelSize, calculateTimeSeries)
+    DFList = sm.simulationModel(simulationModelSize, yearHourRange, mu, sigma)
     return DFList
 
-simulatedDataFrameList = simulateDF();
-print(simulatedDataFrameList)
+############For Testing Performance of For Loop Solution to Generate N Number of TS###########
+def testSimulateTSPerformance():
+    import time
+    start_time = time.time()
+    simulatedDataFrameList = simulateTS(simulationModelSize, startDate, endDate)
+    print("--- %s seconds --- For Loop" % (time.time() - start_time))
+    print("Total Time Series")
+    print(len(simulatedDataFrameList))
+    print(simulatedDataFrameList)
+
+#simulatedTSList = simulateTS(simulationModelSize, startDate, endDate)
+#print(len(simulatedTSList))
+#print(simulatedTSList)
+
+#testSimulateTSPerformance()
+
+
+#Assignment3 Task 1 - Using Cython
+def simulationTSCython(startDate, endDate, simulationModelSize):
+    from cIntegration.cIntegrationModeler import cIntegrationModeler
+    import pandas as pd
+    sm = cIntegrationModeler()
+    yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
+#    print(yearHourRange.ndim)
+#    print(yearHourRange)
+    TSList = sm.multiDataFrameGeneratorFunc(yearHourRange, simulationModelSize, mu, sigma)
+    return TSList
+
+
+###########For Testing Performance of For Cython Function to Generate N Number of TS###########
+def testSimulateTSCythonPerformance():
+    import time
+    start_time = time.time()
+    simulatedTSList = simulationTSCython(startDate, endDate, simulationModelSize)
+    print("--- %s seconds --- Cython" % (time.time() - start_time))
+    print("Total Time Series")
+    print(len(simulatedTSList))
+    print(simulatedTSList)
+    
+
+testSimulateTSCythonPerformance()
+# simulatedTSList = simulationTSCython(startDate, endDate, simulationModelSize)
+#print(simulatedTSList)
