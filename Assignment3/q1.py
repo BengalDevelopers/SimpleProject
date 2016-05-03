@@ -102,54 +102,69 @@ def calculateMontlyAverage(YearlytimeSeries, startDate, endDate):
     
 
 #Assignment3 Task 1 - Using Foor Loop
-def simulateTS(simulationModelSize, startDate, endDate):
-    import pandas as pd
-    yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
+
+#Assignment3 Task 1 , 2 
+def simulateTS(startDate, endDate, simulationModelSize):
     from simulationModule.simulateXDataframe import simulateXDataframe
     sm = simulateXDataframe()
-    DFList = sm.simulationModel(simulationModelSize, yearHourRange, mu, sigma)
+    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
     return DFList
+
+
 
 ############For Testing Performance of For Loop Solution to Generate N Number of TS###########
 def testSimulateTSPerformance():
     import time
     start_time = time.time()
-    simulatedDataFrameList = simulateTS(simulationModelSize, startDate, endDate)
+    simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize)
     print("--- %s seconds --- For Loop" % (time.time() - start_time))
     print("Total Time Series")
     print(len(simulatedDataFrameList))
     print(simulatedDataFrameList)
 
-#simulatedTSList = simulateTS(simulationModelSize, startDate, endDate)
-#print(len(simulatedTSList))
-#print(simulatedTSList)
-
-#testSimulateTSPerformance()
-
-
-#Assignment3 Task 1 - Using Cython
-def simulationTSCython(startDate, endDate, simulationModelSize):
-    from cIntegration.cIntegrationModeler import cIntegrationModeler
-    import pandas as pd
-    sm = cIntegrationModeler()
-    yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
-#    print(yearHourRange.ndim)
-#    print(yearHourRange)
-    TSList = sm.multiDataFrameGeneratorFunc(yearHourRange, simulationModelSize, mu, sigma)
-    return TSList
-
-
-###########For Testing Performance of For Cython Function to Generate N Number of TS###########
-def testSimulateTSCythonPerformance():
-    import time
-    start_time = time.time()
-    simulatedTSList = simulationTSCython(startDate, endDate, simulationModelSize)
-    print("--- %s seconds --- Cython" % (time.time() - start_time))
-    print("Total Time Series")
-    print(len(simulatedTSList))
-    print(simulatedTSList)
     
+simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize)
+print(len(simulatedDataFrameList))   
+#print(simulatedDataFrameList)   
 
-testSimulateTSCythonPerformance()
-# simulatedTSList = simulationTSCython(startDate, endDate, simulationModelSize)
-#print(simulatedTSList)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+#    
+##Assignment3 Task 1 - Using Cython
+#def simulationTSCython(startDate, endDate, simulationModelSize):
+#    from cIntegration.cIntegrationModeler import cIntegrationModeler
+#    import pandas as pd
+#    sm = cIntegrationModeler()
+#    yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
+##    print(yearHourRange.ndim)
+##    print(yearHourRange)
+#    TSList = sm.multiDataFrameGeneratorFunc(yearHourRange, simulationModelSize, mu, sigma)
+#    return TSList
+#
+#
+############For Testing Performance of For Cython Function to Generate N Number of TS###########
+#def testSimulateTSCythonPerformance():
+#    import time
+#    start_time = time.time()
+#    simulatedTSList = simulationTSCython(startDate, endDate, simulationModelSize)
+#    print("--- %s seconds --- Cython" % (time.time() - start_time))
+#    print("Total Time Series")
+#    print(len(simulatedTSList))
+#    print(simulatedTSList)
+#    
+#
+#testSimulateTSCythonPerformance()
+## simulatedTSList = simulationTSCython(startDate, endDate, simulationModelSize)
+##print(simulatedTSList)
