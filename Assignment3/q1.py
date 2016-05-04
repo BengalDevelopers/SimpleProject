@@ -123,12 +123,27 @@ def testSimulateTSPerformance():
     print(simulatedDataFrameList)
 
     
-simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize)
-print(len(simulatedDataFrameList))   
+#simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
 #print(simulatedDataFrameList)   
+testSimulateTSPerformance()
 
-    
-    
+#import pandas as pd
+#import numpy as np
+#import datetime as dt
+#
+#dynamicOnesArray = np.empty(8761, dtype = int)
+#dynamicOnesArray.fill(1)
+#yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
+#
+#yearHourRangeArray = np.array(tuple(yearHourRange.values), dtype= np.datetime64)
+#dynamicOnesArray = np.empty(8761, dtype = int)
+#dynamicOnesArray.fill(1)
+#print yearHourRangeArray.reshape(-1)
+#print dynamicOnesArray.reshape(-1)
+##a = np.array(dynamicOnesArray)
+##b = np.array(yearHourRange)
+#df1=pd.DataFrame(yearHourRangeArray, index=dynamicOnesArray.tolist(), columns=['DateTime'])
+#df = pd.DataFrame(y_t,  columns=['y_t', 'DateTime'], index = df1.tolist())
     
     
     
