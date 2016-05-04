@@ -74,7 +74,13 @@ def calculateMontlyAverage(YearlytimeSeries, startDate, endDate):
 	avgYT =  timeAverageCalc()
 	monthlyAverage = avgYT.monthlyAverage(YearlytimeSeries, startDate, endDate)
 	return monthlyAverage
-			
+
+# Generate n Simulations
+def simulateTS(startDate, endDate, simulationModelSize):
+    from simulationModule.simulateXDataframe import simulateXDataframe
+    sm = simulateXDataframe()
+    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
+    return DFList
 
 #Assignment1 Task 1	
 ##calculateCall()
@@ -98,19 +104,10 @@ def calculateMontlyAverage(YearlytimeSeries, startDate, endDate):
 #calculate Monthly Averages of Y_T
 #monthlyAvg = calculateMontlyAverage(YearlytimeSeries, startDate, endDate)
 
-#Assignment3 Task 1
-    
+#Assignment3 Task 1 , 2, 3
 
-#Assignment3 Task 1 - Using Foor Loop
-
-#Assignment3 Task 1 , 2 
-def simulateTS(startDate, endDate, simulationModelSize):
-    from simulationModule.simulateXDataframe import simulateXDataframe
-    sm = simulateXDataframe()
-    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
-    return DFList
-
-
+simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
+print(simulatedDataFrameList)
 
 ############For Testing Performance of For Loop Solution to Generate N Number of TS###########
 def testSimulateTSPerformance():
@@ -122,29 +119,11 @@ def testSimulateTSPerformance():
     print(len(simulatedDataFrameList))
     print(simulatedDataFrameList)
 
-    
-#simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
-#print(simulatedDataFrameList)   
-testSimulateTSPerformance()
 
-#import pandas as pd
-#import numpy as np
-#import datetime as dt
-#
-#dynamicOnesArray = np.empty(8761, dtype = int)
-#dynamicOnesArray.fill(1)
-#yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
-#
-#yearHourRangeArray = np.array(tuple(yearHourRange.values), dtype= np.datetime64)
-#dynamicOnesArray = np.empty(8761, dtype = int)
-#dynamicOnesArray.fill(1)
-#print yearHourRangeArray.reshape(-1)
-#print dynamicOnesArray.reshape(-1)
-##a = np.array(dynamicOnesArray)
-##b = np.array(yearHourRange)
-#df1=pd.DataFrame(yearHourRangeArray, index=dynamicOnesArray.tolist(), columns=['DateTime'])
-#df = pd.DataFrame(y_t,  columns=['y_t', 'DateTime'], index = df1.tolist())
-    
+
+###Assignment3 Task 1 Performance Testing Function####
+#testSimulateTSPerformance()
+
     
     
     
