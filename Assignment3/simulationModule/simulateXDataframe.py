@@ -23,7 +23,8 @@ class simulateXDataframe:
 #        df = pd.Series((y_t,dynamicOnesArray),  columns=['y_t', 'index'], index = index)
         for x in dynamicSimulationArray:
 #           Normal Distribution for Dataframe
-            y_t = np.random.normal(mu, sigma, len(yearHourRange))  
+            y_t = np.random.normal(mu, sigma, len(yearHourRange))
+###########################Need Performance Improvements For this Section##############################
 #           Filling Current Simulation Index
             dynamicOnesArray.fill(i)
 #           Generating Variables to create Multi-index for Dataframe
@@ -31,6 +32,7 @@ class simulateXDataframe:
             tupleslist = list(zip(*arrays))
 #           Generating Multi-index for DataFrame
             index = pd.MultiIndex.from_tuples(tupleslist, names=['sim no', 'datetimeindex'])
+###########################End of Need Performance Improvements For this Section#######################
 #           Now Creating the Dataframe with the Created Multi-Index
             df = pd.DataFrame(y_t,  columns=['y_t'], index = index)
 #            Appending df to a list
