@@ -82,6 +82,15 @@ def simulateTS(startDate, endDate, simulationModelSize):
     DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
     return DFList
 
+def simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumber):
+    from simulationModule.simulateXDataframe import simulateXDataframe
+    from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
+    sm = simulateXDataframe()
+    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
+    simAVG = simulateAvgCalc()
+    AVG = simAVG.simulationAvgHour(startDate, endDate, DFList,simulationModelSize, hournumber)
+    return AVG
+
 #Assignment1 Task 1	
 ##calculateCall()
 
@@ -104,10 +113,11 @@ def simulateTS(startDate, endDate, simulationModelSize):
 #calculate Monthly Averages of Y_T
 #monthlyAvg = calculateMontlyAverage(YearlytimeSeries, startDate, endDate)
 
-#Assignment3 Task 1 , 2, 3
 
-simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
-print(simulatedDataFrameList)
+####################Assignment3 Task 1A, 1B##########################
+
+#simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
+#print(simulatedDataFrameList)
 
 ############For Testing Performance of For Loop Solution to Generate N Number of TS###########
 def testSimulateTSPerformance():
@@ -119,20 +129,18 @@ def testSimulateTSPerformance():
     print(len(simulatedDataFrameList))
     print(simulatedDataFrameList)
 
-
+    
 
 ###Assignment3 Task 1 Performance Testing Function####
 #testSimulateTSPerformance()
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+####################Assignment3 Task 2####################
+hournumber = 5
+AVGHour = simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumber)
+print 'Simulation Avg for Hour: ', hournumber
+print AVGHour
+   
     
     
 #    

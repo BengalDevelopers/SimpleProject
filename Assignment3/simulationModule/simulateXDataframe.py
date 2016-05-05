@@ -14,13 +14,13 @@ class simulateXDataframe:
         dynamicOnesArray = np.empty(N, dtype = int)
         #Loop Size Dictated by Simulation Array Size
         dynamicSimulationArray =[]
-        dynamicSimulationArray = np.ones(simulationModelSize + 1)
+        dynamicSimulationArray = np.ones(simulationModelSize)
         # Setting Up Date Time Index for Dataframe
         yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
         result = []
         df1 = pd.DataFrame()
-        arrays = [yearHourRange]
-#        df = pd.Series((y_t,dynamicOnesArray),  columns=['y_t', 'index'], index = index)
+        
+        #Now Generating N Simulations
         for x in dynamicSimulationArray:
 #           Normal Distribution for Dataframe
             y_t = np.random.normal(mu, sigma, len(yearHourRange))
