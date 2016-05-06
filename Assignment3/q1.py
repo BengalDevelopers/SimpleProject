@@ -1,5 +1,5 @@
 import numpy as np
-
+import pandas as pd
 #Class to generate mean
 from callOptionModule.callOption import callOption
 from iniparse.config import Undefined
@@ -20,7 +20,7 @@ startDate = '01/01/2016'
 endDate = '31/12/2016'
 
 #Simulation - How to Items to Simulate
-simulationModelSize = 5
+simulationModelSize = 1000
 
 # Get Mean Value of callOption or putOption 
 def calculateCall():
@@ -44,7 +44,6 @@ def calculateCall():
 # Year Time Series with Hourly - Daily - Weekly -Monthly Breakdown
 def calculateTimeSeries(startDate, endDate):
 # 	Creating Date Range
-    import pandas as pd
     from timeSeriesModule.timeSeries import timeSeries
     yearHourRange = pd.date_range(start=startDate, end=endDate, freq='H')
     #Creating Instance of timeSeries Class
@@ -80,33 +79,59 @@ def simulateTS(startDate, endDate, simulationModelSize):
     from simulationModule.simulateXDataframe import simulateXDataframe
     sm = simulateXDataframe()
     DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
+    print 'The Simulation result is as shown below, ', DFList
     return DFList
 
-def simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumber):
-    from simulationModule.simulateXDataframe import simulateXDataframe
+#Hourly Averge within the Simulation
+def simulationAvgCalculateHour(startDate, endDate, simulatedDataFrameList, simulationModelSize, hour):
     from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
-    sm = simulateXDataframe()
-    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
     simAVG = simulateAvgCalc()
-    AVG = simAVG.simulationAvgHour(startDate, endDate, DFList,simulationModelSize, hournumber)
+    AVG = simAVG.simulationAvgHour(startDate, endDate, simulatedDataFrameList,simulationModelSize, hour)
+    if(AVG != None):
+        print 'Simulation Avg for Hour: ', hour
+        print AVG
+    else:
+        print 'Hour is Invalid. Please insert a Valid Hour'
+        AVG = None
     return AVG
 
-def simulationAvgCalculateDay(startDate, endDate, simulationModelSize, day):
-    from simulationModule.simulateXDataframe import simulateXDataframe
+#Daily Averge within the Simulation
+def simulationAvgCalculateDay(startDate, endDate, simulatedDataFrameList, simulationModelSize, day):
     from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
-    sm = simulateXDataframe()
-    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
     simAVG = simulateAvgCalc()
-    AVG = simAVG.simulationAvgDay(startDate, endDate, DFList,simulationModelSize, day)
+    AVG = simAVG.simulationAvgDay(startDate, endDate, simulatedDataFrameList,simulationModelSize, day)
+    if(AVG != None):
+        print 'Simulation Avg for Day: ', day
+        print AVG
+    else:
+        print 'Day is Invalid. Please insert a Valid Date'
+        AVG = None
     return AVG
 
-def simulationAvgCalculateWeek(startDate, endDate, simulationModelSize, day):
-    from simulationModule.simulateXDataframe import simulateXDataframe
+#Weekly Averge within the Simulation
+def simulationAvgCalculateWeek(startDate, endDate, simulatedDataFrameList, simulationModelSize, week):
     from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
-    sm = simulateXDataframe()
-    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
     simAVG = simulateAvgCalc()
-    AVG = simAVG.simulationAvgWeek(startDate, endDate, DFList,simulationModelSize, day)
+    AVG = simAVG.simulationAvgWeek(startDate, endDate, simulatedDataFrameList, simulationModelSize, week)
+    if(AVG != None):
+        print 'Simulation Avg for Week: ', week
+        print AVG
+    else:
+        print 'Week is Invalid. Please insert a Valid Week'
+        AVG = None    
+    return AVG
+
+#Monthly Averge within the Simulation
+def simulationAvgCalculateMonth(startDate, endDate, simulatedDataFrameList, simulationModelSize, month):
+    from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
+    simAVG = simulateAvgCalc()
+    AVG = simAVG.simulationAvgMonth(startDate, endDate, simulatedDataFrameList,simulationModelSize, month)
+    if(AVG != None):
+        print 'Simulation Avg for Month: ', month
+        print AVG
+    else:
+        print 'Month is Invalid. Please insert a Valid Month'
+        AVG = None    
     return AVG
 
 
@@ -133,11 +158,6 @@ def simulationAvgCalculateWeek(startDate, endDate, simulationModelSize, day):
 #monthlyAvg = calculateMontlyAverage(YearlytimeSeries, startDate, endDate)
 
 
-####################Assignment3 Task 1A, 1B##########################
-
-#simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
-#print(simulatedDataFrameList)
-
 ############For Testing Performance of For Loop Solution to Generate N Number of TS###########
 def testSimulateTSPerformance():
     import time
@@ -145,36 +165,56 @@ def testSimulateTSPerformance():
     simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize)
     print("--- %s seconds --- For Loop" % (time.time() - start_time))
     print("Total Time Series")
+#    pd.options.display.max_rows = 20000
     print(len(simulatedDataFrameList))
     print(simulatedDataFrameList)
 
     
 
+
+
+####################Assignment3 Task 1A, 1B##########################
+
+simulatedDataFrameList = simulateTS(startDate, endDate, simulationModelSize) 
 ###Assignment3 Task 1 Performance Testing Function####
 #testSimulateTSPerformance()
 
 
 ####################Assignment3 Task 2####################
-#hournumber = 5
-#AVGHour = simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumber)
-#print 'Simulation Avg for Hour: ', hournumber
-#print AVGHour
-   
-day = 4
-AVGDay = simulationAvgCalculateDay(startDate, endDate, simulationModelSize, day)    
-print 'Simulation Avg for Day: ', day
-print AVGDay
+hour = 1000
+simulationAvgCalculateHour(startDate, endDate, simulatedDataFrameList, simulationModelSize, hour)
 
-week = 3
-AVGWeek = simulationAvgCalculateWeek(startDate, endDate, simulationModelSize, week)    
-print 'Simulation Avg for Week: ', week
-print AVGWeek
+day = 300
+simulationAvgCalculateDay(startDate, endDate, simulatedDataFrameList, simulationModelSize, day)    
 
+
+week = 52
+simulationAvgCalculateWeek(startDate, endDate, simulatedDataFrameList, simulationModelSize, week)    
+
+
+month = 12
+simulationAvgCalculateMonth(startDate, endDate, simulatedDataFrameList, simulationModelSize, month)   
 
 
 
 
-#    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+########################NOT Required But kept as a reference for future needs########################
 ##Assignment3 Task 1 - Using Cython
 #def simulationTSCython(startDate, endDate, simulationModelSize):
 #    from cIntegration.cIntegrationModeler import cIntegrationModeler
