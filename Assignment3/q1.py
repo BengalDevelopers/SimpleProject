@@ -20,7 +20,7 @@ startDate = '01/01/2016'
 endDate = '31/12/2016'
 
 #Simulation - How to Items to Simulate
-simulationModelSize = 1000
+simulationModelSize = 5
 
 # Get Mean Value of callOption or putOption 
 def calculateCall():
@@ -91,6 +91,25 @@ def simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumb
     AVG = simAVG.simulationAvgHour(startDate, endDate, DFList,simulationModelSize, hournumber)
     return AVG
 
+def simulationAvgCalculateDay(startDate, endDate, simulationModelSize, day):
+    from simulationModule.simulateXDataframe import simulateXDataframe
+    from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
+    sm = simulateXDataframe()
+    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
+    simAVG = simulateAvgCalc()
+    AVG = simAVG.simulationAvgDay(startDate, endDate, DFList,simulationModelSize, day)
+    return AVG
+
+def simulationAvgCalculateWeek(startDate, endDate, simulationModelSize, day):
+    from simulationModule.simulateXDataframe import simulateXDataframe
+    from simulationAvgCalculator.simulationAvgCalculator import simulateAvgCalc
+    sm = simulateXDataframe()
+    DFList = sm.simulationModel(startDate, endDate, simulationModelSize)
+    simAVG = simulateAvgCalc()
+    AVG = simAVG.simulationAvgWeek(startDate, endDate, DFList,simulationModelSize, day)
+    return AVG
+
+
 #Assignment1 Task 1	
 ##calculateCall()
 
@@ -136,13 +155,25 @@ def testSimulateTSPerformance():
 
 
 ####################Assignment3 Task 2####################
-hournumber = 5
-AVGHour = simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumber)
-print 'Simulation Avg for Hour: ', hournumber
-print AVGHour
+#hournumber = 5
+#AVGHour = simulationAvgCalculateHour(startDate, endDate, simulationModelSize, hournumber)
+#print 'Simulation Avg for Hour: ', hournumber
+#print AVGHour
    
-    
-    
+day = 4
+AVGDay = simulationAvgCalculateDay(startDate, endDate, simulationModelSize, day)    
+print 'Simulation Avg for Day: ', day
+print AVGDay
+
+week = 3
+AVGWeek = simulationAvgCalculateWeek(startDate, endDate, simulationModelSize, week)    
+print 'Simulation Avg for Week: ', week
+print AVGWeek
+
+
+
+
+
 #    
 ##Assignment3 Task 1 - Using Cython
 #def simulationTSCython(startDate, endDate, simulationModelSize):
